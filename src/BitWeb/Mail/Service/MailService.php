@@ -27,6 +27,24 @@ class MailService
         $this->setTransport($transportInterface);
     }
 
+    /**
+     * @param \BitWeb\Mail\Configuration $configuration
+     * @return self
+     */
+    public function setConfiguration($configuration)
+    {
+        $this->configuration = $configuration;
+        return $this;
+    }
+
+    /**
+     * @return \BitWeb\Mail\Configuration
+     */
+    public function getConfiguration()
+    {
+        return $this->configuration;
+    }
+
     public function setTransport(TransportInterface $transport)
     {
         $this->transport = $transport;
@@ -40,12 +58,12 @@ class MailService
     public function send(Message $message, array $attachments = array())
     {
         if (!$this->bypassConfiguration) {
-            if (isset($this->getConfig()->mail) && $this->getConfig()->mail->sendAllMailsToBcc != null) {
-                $message->addBcc($this->getConfig()->mail->sendAllMailsToBcc);
+            if ($this->getConfiguration()->getSendAllMailsToBcc() !== null) {
+                $message->addBcc($this->getConfiguration()->getSendAllMailsToBcc());
             }
 
-            if (isset($this->getConfig()->mail) && $this->getConfig()->mail->sendAllMailsTo != null) {
-                $message->setTo($this->getConfig()->mail->sendAllMailsTo);
+            if ($this->getConfiguration()->getSendAllMailsTo() != null) {
+                $message->setTo($this->getConfiguration()->getSendAllMailsTo());
             }
         }
 
@@ -83,5 +101,4 @@ class MailService
 
         $this->setBypassConfiguration();
     }
-
 }

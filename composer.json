@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "zendframework/zend-mail": "~2.2"
+        "zendframework/zend-mail": "~2.2",
+        "bitweb/stdlib": "dev-master"
     },
     "autoload": {
         "psr-0": {
