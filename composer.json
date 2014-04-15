@@ -1,0 +1,20 @@
+{
+    "name": "bitweb/mail",
+    "description": "BitWeb extension for sending emails.",
+    "license": "proprietary",
+    "homepage": "http://bitweb.ee/",
+    "authors": [
+        {
+            "name": "Rain Ramm",
+            "email": "rain@bitweb.ee"
+        }
+    ],
+    "require": {
+        "zendframework/zend-mail": "~2.2"
+    },
+    "autoload": {
+        "psr-0": {
+            "": ["src/"]
+        }
+    }
+}
