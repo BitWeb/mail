@@ -90,7 +90,7 @@ class MailService
                 $message = new Message();
                 $attachments = [];
                 if (isset($target['to']) && is_array($target['to'])) {
-                    $message->setTo($target['cc']);
+                    $message->setTo($target['to']);
                 }
 
                 if (isset($target['cc']) && is_array($target['cc'])) {
