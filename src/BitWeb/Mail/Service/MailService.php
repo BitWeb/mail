@@ -85,47 +85,49 @@ class MailService
     public function initializeListener()
     {
         if ($this->eventManager !== null) {
-            $this->getEventManager()->attach(self::SEND_MAIL, function (EventInterface $e) use ($this) {
-                $target = $e->getTarget();
-                $message = new Message();
-                $attachments = [];
-                if (isset($target['to']) && is_array($target['to'])) {
-                    $message->setTo($target['to']);
-                }
-
-                if (isset($target['cc']) && is_array($target['cc'])) {
-                    foreach ($target['cc'] as $cc) {
-                        $message->addCc($cc);
-                    }
-                }
-
-                if (isset($target['bcc']) && is_array($target['bcc'])) {
-                    foreach ($target['bcc'] as $bcc) {
-                        $message->addBcc($bcc);
-                    }
-                }
-
-                if (isset($target['from']) && is_array($target['from'])) {
-                    $message->setFrom($target['from']);
-                }
-
-                if (isset($target['subject']) && is_array($target['subject'])) {
-                    $message->setSubject($target['subject']);
-                }
-
-                if (isset($target['body']) && is_array($target['body'])) {
-                    $message->setBody($target['body']);
-                }
-
-                if (isset($target['attachments']) && is_array($target['attachments'])) {
-                    foreach ($target['attachments'] as $filePath) {
-                        $attachments[] = $this->getPartFromFile($filePath);
-                    }
-                }
-
-                $this->send($message, $attachments);
-            });
+            return;
         }
+        
+        $this->getEventManager()->attach(self::SEND_MAIL, function (EventInterface $e) use ($this) {
+            $target = $e->getTarget();
+            $message = new Message();
+            $attachments = [];
+            if (isset($target['to']) && is_array($target['to'])) {
+                $message->setTo($target['to']);
+            }
+
+            if (isset($target['cc']) && is_array($target['cc'])) {
+                foreach ($target['cc'] as $cc) {
+                    $message->addCc($cc);
+                }
+            }
+
+            if (isset($target['bcc']) && is_array($target['bcc'])) {
+                foreach ($target['bcc'] as $bcc) {
+                    $message->addBcc($bcc);
+                }
+            }
+
+            if (isset($target['from']) && is_array($target['from'])) {
+                $message->setFrom($target['from']);
+            }
+
+            if (isset($target['subject']) && is_array($target['subject'])) {
+                $message->setSubject($target['subject']);
+            }
+
+            if (isset($target['body']) && is_array($target['body'])) {
+                $message->setBody($target['body']);
+            }
+
+            if (isset($target['attachments']) && is_array($target['attachments'])) {
+                foreach ($target['attachments'] as $filePath) {
+                    $attachments[] = $this->getPartFromFile($filePath);
+                }
+            }
+
+            $this->send($message, $attachments);
+        });
     }
 
     protected function getPartFromFile($filePath)
