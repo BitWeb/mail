@@ -31,7 +31,6 @@ class MailService
      * @var EventManagerInterface
      */
     protected $eventManager;
-    protected $bypassConfiguration = false;
 
     /**
      * @param \BitWeb\Mail\Configuration $configuration
@@ -129,14 +128,12 @@ class MailService
 
     public function send(Message $message, array $attachments = array())
     {
-        if (!$this->bypassConfiguration) {
-            if ($this->getConfiguration()->getSendAllMailsToBcc() !== null) {
-                $message->addBcc($this->getConfiguration()->getSendAllMailsToBcc());
-            }
+        if ($this->getConfiguration()->getSendAllMailsToBcc() !== null) {
+            $message->addBcc($this->getConfiguration()->getSendAllMailsToBcc());
+        }
 
-            if ($this->getConfiguration()->getSendAllMailsTo() != null) {
-                $message->setTo($this->getConfiguration()->getSendAllMailsTo());
-            }
+        if ($this->getConfiguration()->getSendAllMailsTo() != null) {
+            $message->setTo($this->getConfiguration()->getSendAllMailsTo());
         }
 
         $content = $message->getBody();
@@ -170,7 +167,5 @@ class MailService
         $message->setEncoding("UTF-8");
 
         $this->transport->send($message);
-
-        $this->setBypassConfiguration();
     }
 }
