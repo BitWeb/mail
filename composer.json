@@ -11,7 +11,7 @@
     ],
     "require": {
         "zendframework/zend-mail": "~2.2",
-        "bitweb/stdlib": "dev-master",
+        "bitweb/stdlib": "~1.1",
         "zendframework/zend-eventmanager": "~2.2"
     },
     "autoload": {
