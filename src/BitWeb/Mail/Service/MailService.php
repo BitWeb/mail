@@ -4,6 +4,7 @@ namespace BitWeb\Mail\Service;
 
 use BitWeb\Mail\Configuration;
 use Zend\EventManager\EventInterface;
+use Zend\EventManager\EventManagerAwareTrait;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
@@ -12,7 +13,9 @@ use Zend\Mime\Part;
 
 class MailService
 {
-    const SEND_MAIL = 'bitweb.mailService.send';
+    use EventManagerAwareTrait;
+
+    const EVENT_SEND_MAIL = 'bitweb.mailService.send';
 
     /**
      * @var TransportInterface
@@ -29,24 +32,6 @@ class MailService
      */
     protected $eventManager;
     protected $bypassConfiguration = false;
-
-    /**
-     * @param \Zend\EventManager\EventManagerInterface $eventManager
-     * @return self
-     */
-    public function setEventManager($eventManager)
-    {
-        $this->eventManager = $eventManager;
-        return $this;
-    }
-
-    /**
-     * @return \Zend\EventManager\EventManagerInterface
-     */
-    public function getEventManager()
-    {
-        return $this->eventManager;
-    }
 
     /**
      * @param \BitWeb\Mail\Configuration $configuration
@@ -87,36 +72,36 @@ class MailService
         if ($this->eventManager !== null) {
             return;
         }
-        
-        $this->getEventManager()->attach(self::SEND_MAIL, function (EventInterface $e) use ($this) {
+
+        $this->getEventManager()->attach(self::EVENT_SEND_MAIL, function (EventInterface $e) {
             $target = $e->getParams();
             $message = new Message();
             $attachments = [];
             if (isset($target['to']) && is_array($target['to'])) {
-                $message->setTo($target['to']);
+                $message->setTo($target['to']['email'], $target['to']['name']);
             }
 
             if (isset($target['cc']) && is_array($target['cc'])) {
                 foreach ($target['cc'] as $cc) {
-                    $message->addCc($cc);
+                    $message->addCc($cc['email'], $cc['name']);
                 }
             }
 
             if (isset($target['bcc']) && is_array($target['bcc'])) {
                 foreach ($target['bcc'] as $bcc) {
-                    $message->addBcc($bcc);
+                    $message->addBcc($bcc['email'], $bcc['name']);
                 }
             }
 
             if (isset($target['from']) && is_array($target['from'])) {
-                $message->setFrom($target['from']);
+                $message->setFrom($target['from']['email'], $target['from']['name']);
             }
 
-            if (isset($target['subject']) && is_array($target['subject'])) {
+            if (isset($target['subject']) && $target['subject']) {
                 $message->setSubject($target['subject']);
             }
 
-            if (isset($target['body']) && is_array($target['body'])) {
+            if (isset($target['body']) && $target['body']) {
                 $message->setBody($target['body']);
             }
 
