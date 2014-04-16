@@ -8,14 +8,14 @@ class Configuration extends AbstractConfiguration
 {
 
     /**
-     * @var array|string
+     * @var string
      */
     protected $sendAllMailsTo = null;
 
     /**
      * Add additional receivers, usually empty array for local
      *
-     * @var array|string
+     * @var array
      */
     protected $sendAllMailsToBcc = null;
 
