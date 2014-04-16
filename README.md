@@ -24,10 +24,7 @@ Parameters when using the event listener.
         'name' => 'Me'
     ],
     'subject' => 'Application rejected',
-    'body' => [
-        'html' => '<h3>Your application has been rejected.</h3>',
-        'text' => 'Your application has been rejected.'
-    ],
+    'body' => 'Your application has been rejected.',
     'attachments' => [
         'path/to/my/file.file'
     ]
