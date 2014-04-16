@@ -1,6 +1,6 @@
 mail
 ====
-Target when using the event listener.
+Parameters when using the event listener.
 ```php
 [
     'to' => [

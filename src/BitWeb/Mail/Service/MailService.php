@@ -89,7 +89,7 @@ class MailService
         }
         
         $this->getEventManager()->attach(self::SEND_MAIL, function (EventInterface $e) use ($this) {
-            $target = $e->getTarget();
+            $target = $e->getParams();
             $message = new Message();
             $attachments = [];
             if (isset($target['to']) && is_array($target['to'])) {
