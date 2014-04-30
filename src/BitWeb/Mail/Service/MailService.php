@@ -142,7 +142,7 @@ class MailService
         $multiPartContentMessage = new \Zend\Mime\Message();
 
         $text = new Part(strip_tags($content));
-        $text->type = "text/plain";
+        $text->type = Mime::TYPE_TEXT;
         $text->encoding = Mime::ENCODING_QUOTEDPRINTABLE;
         $multiPartContentMessage->addPart($text);
 
