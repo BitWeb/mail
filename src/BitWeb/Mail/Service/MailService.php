@@ -73,39 +73,39 @@ class MailService
         }
 
         $this->getEventManager()->attach(self::EVENT_SEND_MAIL, function (EventInterface $e) {
-            $target = $e->getParams();
+            $params = $e->getParams();
             $message = new Message();
             $attachments = [];
-            if (isset($target['to']) && is_array($target['to'])) {
-                $message->setTo($target['to']['email'], $target['to']['name']);
+            if (isset($params['to']) && is_array($params['to'])) {
+                $message->setTo($params['to']['email'], $params['to']['name']);
             }
 
-            if (isset($target['cc']) && is_array($target['cc'])) {
-                foreach ($target['cc'] as $cc) {
+            if (isset($params['cc']) && is_array($params['cc'])) {
+                foreach ($params['cc'] as $cc) {
                     $message->addCc($cc['email'], $cc['name']);
                 }
             }
 
-            if (isset($target['bcc']) && is_array($target['bcc'])) {
-                foreach ($target['bcc'] as $bcc) {
+            if (isset($params['bcc']) && is_array($params['bcc'])) {
+                foreach ($params['bcc'] as $bcc) {
                     $message->addBcc($bcc['email'], $bcc['name']);
                 }
             }
 
-            if (isset($target['from']) && is_array($target['from'])) {
-                $message->setFrom($target['from']['email'], $target['from']['name']);
+            if (isset($params['from']) && is_array($params['from'])) {
+                $message->setFrom($params['from']['email'], $params['from']['name']);
             }
 
-            if (isset($target['subject']) && $target['subject']) {
-                $message->setSubject($target['subject']);
+            if (isset($params['subject']) && $params['subject']) {
+                $message->setSubject($params['subject']);
             }
 
-            if (isset($target['body']) && $target['body']) {
-                $message->setBody($target['body']);
+            if (isset($params['body']) && $params['body']) {
+                $message->setBody($params['body']);
             }
 
-            if (isset($target['attachments']) && is_array($target['attachments'])) {
-                foreach ($target['attachments'] as $filePath) {
+            if (isset($params['attachments']) && is_array($params['attachments'])) {
+                foreach ($params['attachments'] as $filePath) {
                     $attachments[] = $this->getPartFromFile($filePath);
                 }
             }
