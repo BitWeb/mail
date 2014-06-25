@@ -66,7 +66,7 @@ class MailService
         $this->setConfiguration($configuration);
     }
 
-    public function initializeListener()
+    public function attachDefaultListeners()
     {
         if ($this->eventManager !== null) {
             return;
