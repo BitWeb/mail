@@ -1,5 +1,8 @@
 mail
 ====
+
+##PHP 5.4 compatibility branch
+
 Parameters when using the event listener.
 ```php
 [
