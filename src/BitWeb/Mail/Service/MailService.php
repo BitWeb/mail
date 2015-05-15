@@ -154,8 +154,9 @@ class MailService
 
 
         $multiPartContentMimePart = new Part($multiPartContentMessage->generateMessage());
-        $multiPartContentMimePart->type = 'multipart/alternative;' . PHP_EOL . ' boundary="' .
-            $multiPartContentMessage->getMime()->boundary() . '"';
+        $multiPartContentMimePart->charset  = 'UTF-8';
+        $multiPartContentMimePart->type     = 'multipart/alternative';
+        $multiPartContentMimePart->boundary = $multiPartContentMessage->getMime()->boundary();
 
         $bodyMessage->addPart($multiPartContentMimePart);
 
